@@ -12,6 +12,10 @@ public func configure(_ app: Application) throws {
 
     app.views.use(.leaf)
 
+    app.migrations.add(CreateUser())
+    app.migrations.add(CreatePost())
+    app.migrations.add(CreateComment())
+    
     try routes(app)
 
 
