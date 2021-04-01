@@ -1,14 +1,20 @@
 <html>
-      <ul>
-              #for(el in CommentList):
-                <article>
+   <ul>
+         #for(comment in CommentList):
+         <div>
+          BODY : #(comment.body)
+         </div>
+          BY USER: #(comment.user.id)
+         <div>
+         ON POST: #(comment.post.id)
+         </div>
+        </br>
+        </br> 
+         #endfor
 
-                  <p>#(el.body)</p>
-                  <h2>comment id: #(el.id)</h2>
-                  <h2>user id: #(el.user.id)<h2>
-                  
-                </article>
-              #endfor
+      <form action ="/" method="GET">
+              <button> BACK </button>
+      </form> 
 
-      </ul>
+   </ul>
 </html>

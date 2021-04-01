@@ -1,15 +1,21 @@
 <html>
-      <ul>
-              #for(el in PostList):
-                <article>
+   <ul>
+         #for(post in PostList):
+         <div>
+          TITLE : #(post.title)
+         </div>
+          BY USER: #(post.user.id)
+          POST ID: #(post.id)
+         <div>
+         BODY : #(post.body)
+         </div>
+        </br>
+        </br> 
+         #endfor
 
-                  <h2>#(el.title)</h2>
-                  <p>#(el.body)</p>
-                  <h2>#(el.id)</h2>
-                  <h2>#(el.user.id)<h2>
-                  
-                </article>
-              #endfor
+      <form action ="/" method="GET">
+              <button> BACK </button>
+      </form> 
 
-      </ul>
+   </ul>
 </html>
