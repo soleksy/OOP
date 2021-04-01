@@ -1,6 +1,30 @@
 <html>
-      <ul>
-        <h5>#(user.name)</h5>
-        <h5>#(user.id)</h5>
-      </ul>
+      <table>
+         <tr>
+            <th>INFO</th>
+            <th>ACTIONS</th>
+            <th>POSTS</th>
+            <th>COMMENTS</th>
+         </tr>
+         <tr>
+            <td>#(user.name)</td>
+            <td> 
+                  <form action ="/users/#(user.id)" method="GET">
+                        <button> ADD POST </button>
+                  </form> 
+            </td>
+
+            <td> 
+                  <form action ="/posts/#(user.id)" method="GET">
+                        <button> MY POSTS </button>
+                  </form>
+            </td>
+            <td>
+                  <form action ="/users/#(user.id)" method="GET">
+                        <button> MY COMMENTS </button>
+                  </form> 
+
+            </td>
+         </tr>
+      </table>
 </html>

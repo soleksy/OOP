@@ -5,6 +5,7 @@ struct UserList: Content {
     let UserList: [User]
 }
 
+
 struct UserController: RouteCollection {
 
     func boot(routes: RoutesBuilder) throws{
@@ -12,17 +13,14 @@ struct UserController: RouteCollection {
     let users = routes.grouped("users")
 
     users.get(use: show_all_users)
+    users.get(":userId" , use: show_user)
 
-    users.group(":userId"){ user in 
-            user.get(use: show_user)
-            user.delete(use: delete)
-        }
+    users.get("delete" , ":userId" , use: delete)
 
-    users.put(use: update)
-    users.post(use: create)
+    users.post("put" , use: update)
+    users.post("post" ,use: create)
     
     }
-
 
     func show_all_users(req: Request) throws -> EventLoopFuture<View> {
         let users = User.query(on: req.db).all()
@@ -54,6 +52,7 @@ struct UserController: RouteCollection {
 
     func update(req: Request) throws -> EventLoopFuture<Response> {
         let user = try req.content.decode(User.self)
+
         return User.find(user.id, on: req.db)
         .unwrap(or: Abort(.notFound))
         .flatMap{

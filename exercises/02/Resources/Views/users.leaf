@@ -1,17 +1,38 @@
 <html>
-      <ul>
-      
-              #for(el in UserList):
-                <article>
+   <style>
+      table, th, td {
+      border: 1px solid black;
+      }
+   </style>
+   <ul>
+      <table>
+         <tr>
+            <th>Users</th>
+            <th> ID </th>
+            <th> Actions </th>
+         </tr>
+         #for(user in UserList):
+         <tr>
+            <td>#(user.name)</td>
+            <td>#(user.id)</td>
+            <td>
+                  <form action ="users/delete/#(user.id)" method="GET">
+                        <button> DELETE </button>
+                  </form>
 
-                  <h2>#(el.name)</h2>
-                  <p>#(el.id)</p>
+                  <form action ="users/put" method="POST">
+                        <input name="id" value ="#(user.id)" type = "hidden"/>
+                        <input type="text" name="name"/>
+                        <button> EDIT NAME </button>
+                  </form>
 
-                </article>
-              #endfor
+            </td>
+         </tr>
+         #endfor
+      </table>
+      <form action ="/" method="GET">
+              <button> BACK </button>
+      </form> 
 
-
-
-
-      </ul>
+   </ul>
 </html>
