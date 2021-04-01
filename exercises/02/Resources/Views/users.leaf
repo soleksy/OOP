@@ -1,9 +1,6 @@
 <html>
       <ul>
       
-
-
-
               #for(el in UserList):
                 <article>
 

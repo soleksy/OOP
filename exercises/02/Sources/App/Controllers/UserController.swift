@@ -1,7 +1,7 @@
 import Vapor
 import Fluent
 
-struct Context: Content {
+struct UserList: Content {
     let UserList: [User]
 }
 
@@ -28,8 +28,8 @@ struct UserController: RouteCollection {
         let users = User.query(on: req.db).all()
 
         return users.flatMap { list in 
-            let data = Context(UserList: list)
-            return req.view.render("index" , data)
+            let data = UserList(UserList: list)
+            return req.view.render("users" , data)
         }
     }
 

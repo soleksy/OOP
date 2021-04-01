@@ -4,54 +4,7 @@ import Vapor
 func routes(_ app: Application) throws {
 
     try app.register(collection: UserController())
-
-    //Posts
-    //get all posts
-    app.get("posts") { req in 
-        Post.query(on: req.db).with(\.$comments).all()
-    }
-    //get post by id
-    app.get("posts" , ":postId") { req -> EventLoopFuture<Post> in
-
-        Post.find(req.parameters.get("postId") , on: req.db)
-        .unwrap(or: Abort(.notFound))
-    }
-    //add a post
-     app.post("posts") { req -> EventLoopFuture<Post> in
-        let post = try req.content.decode(Post.self)
-        return post.create(on: req.db).map{ post }
-    }
-
-    //update a post (edit)
-    struct UpdatePost: Content {
-        var id: UUID?
-        var title: String
-        var body: String
-    }
-
-    app.put("posts") { req -> EventLoopFuture<HTTPStatus> in
-
-        let post = try req.content.decode(UpdatePost.self)
-
-        return Post.find(post.id , on: req.db)
-        .unwrap(or: Abort(.notFound))
-        .flatMap{
-            $0.title = post.title
-            $0.body = post.body
-            return $0.update(on: req.db).transform(to: .ok)
-        }
-    }
-
-    //delete a post
-
-    app.delete("posts", ":postId") {req -> EventLoopFuture<HTTPStatus> in
-
-        Post.find(req.parameters.get("postId") , on: req.db)
-        .unwrap(or: Abort(.notFound))
-        .flatMap{
-            $0.delete(on: req.db)
-        }.transform(to: .ok)
-    }
+    try app.register(collection: PostController())
 
     // Comments
 

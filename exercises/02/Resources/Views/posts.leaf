@@ -1,0 +1,15 @@
+<html>
+      <ul>
+              #for(el in PostList):
+                <article>
+
+                  <h2>#(el.title)</h2>
+                  <p>#(el.body)</p>
+                  <h2>#(el.id)</h2>
+                  <h2>#(el.user.id)<h2>
+                  
+                </article>
+              #endfor
+
+      </ul>
+</html>
