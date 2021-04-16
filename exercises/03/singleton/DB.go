@@ -30,16 +30,53 @@ func GetInstance() Singleton {
 	return instance
 }
 
+
+func checkErr(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
 func (s *singleton) Open() string {
-	return ""
+	var err error
+
+	s.DB, err = sql.Open("sqlite3","./" + s.name)
+
+	checkErr(err)
+
+	stmt , _ := s.DB.Prepare(`
+		CREATE TABLE IF NOT EXISTS "users" (
+			"id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+			"name" TEXT
+		); 
+	`)
+	
+	checkErr(err)
+
+	_ , err = stmt.Exec()
+
+	checkErr(err)
+	
+	return "Database connection successfuly opened\n"
+	
+	
 }
 
 func (s *singleton) Close() string {
-	return ""
+	var err = s.DB.Close()
+
+	checkErr(err)
+	
+	return "Database connection successfuly closed\n"
 }
 
 func (s *singleton) SetDBName(name string) string {
-	return ""
+	if(name == ""){
+		return "Cannot set an empty name"
+	} else {
+		s.name = name
+		return "Successfully set the db name"
+	}
 }
 
 func (s *singleton) GetAllUsers() []string {

@@ -12,6 +12,9 @@ import (
 func main() {
 
 	DB := singleton.GetInstance()
+	
+	DB.SetDBName("users.db")
+
 	DB.Open()
 
 	e := echo.New()
